@@ -1,0 +1,23 @@
+html, body {
+	margin: 0;
+	padding: 0;
+	background-color: #eee;
+	height: 90%;
+}
+
+p {
+	font-size: 18px;
+}
+
+.container {
+	background-color: #fff;
+	border-radius: 5px;
+	border: 1px solid #BFBFBF;
+	margin: 50px auto;
+	padding: 20px 25px;
+	min-height: 50%;
+}
+
+.home-form {
+	max-width: 50%;
+}
