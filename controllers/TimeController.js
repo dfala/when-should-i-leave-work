@@ -18,16 +18,15 @@ exports.getData = function (req, res) {
 	Query.find({})
 	.then(function (queries) {
 		queries.forEach(function (query) {
-
 			// var cron = new CronJob('* * * * * 1-5', function() {
 			var cron = new CronJob('00 * 16-18 * * 1-5', function() {
-				setInterval(function () {
+				console.log("CRON")
 					//Google map request
 					var uri = "https://maps.googleapis.com/maps/api/directions/json?origin=" + encodeURIComponent(query.fromAddress) + "&destination=" + encodeURIComponent(query.toAddress) + GKey;
 					Request(uri, function (error, response, body) {
 					  if (!error && response.statusCode == 200) {
 							var responseJSON = JSON.parse(response.body);
-							var duration = responseJSON.routes[0].legs[0].duration.value;
+							var duration = responseJSON.routes[0].legs[0].duration_in_traffic.value;
 
 							query.instance.push({duration: duration, time: Date.now()})
 							query.save(function (err, result) {
@@ -38,9 +37,6 @@ exports.getData = function (req, res) {
 							});
 					  }
 					})
-
-				// }, 5000)
-				}, 60000)
 			}, null, true, 'America/Denver');
 
 			// console.log(cron);
