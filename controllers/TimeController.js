@@ -22,10 +22,11 @@ exports.getData = function (req, res) {
 			var cron = new CronJob('00 * 16-18 * * 1-5', function() {
 				console.log("CRON")
 					//Google map request
-					var uri = "https://maps.googleapis.com/maps/api/directions/json?origin=" + encodeURIComponent(query.fromAddress) + "&destination=" + encodeURIComponent(query.toAddress) + GKey;
+					var uri = "https://maps.googleapis.com/maps/api/directions/json?origin=" + encodeURIComponent(query.fromAddress) + "&destination=" + encodeURIComponent(query.toAddress) + "&traffic_model=best_guess&departure_time=now" + "&key=" + GKey;
 					Request(uri, function (error, response, body) {
 					  if (!error && response.statusCode == 200) {
 							var responseJSON = JSON.parse(response.body);
+							if (!responseJSON.routes[0].legs[0].duration_in_traffic) return;
 							var duration = responseJSON.routes[0].legs[0].duration_in_traffic.value;
 
 							query.instance.push({duration: duration, time: Date.now()})
