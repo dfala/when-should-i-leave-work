@@ -16,7 +16,9 @@
 </head>
 
 <body ng-controller="MainController" ng-init="init()" ng-cloak>
-
+	<div class="loading-gif"  ng-if="loading">
+		<img src="styles/loading.gif"/>
+	</div>
 
 	<div class="container" ng-if="false">
 		<form class="home-form" ng-submit="submitForm()">
@@ -38,10 +40,6 @@
 
 			<button class="btn btn-default">Submit</button>
 		</form>
-	</div>
-
-	<div class="loading-gif"  ng-if="loading">
-		<img src="styles/loading.gif"/>
 	</div>
 
 	<div class="card-wrapper" ng-repeat="item in items" ng-click="activateQuery(item)">
