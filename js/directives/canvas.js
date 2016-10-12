@@ -72,7 +72,9 @@ angular.module('myApp')
 					options: options
 				});
 
-				window.scrollTo(0,document.body.scrollHeight);
+				setTimeout(function () {
+					window.scrollTo(0,document.body.scrollHeight);
+				}, 50);
 			};
 
 		}
