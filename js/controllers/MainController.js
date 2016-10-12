@@ -2,6 +2,8 @@ angular.module('myApp')
 
 .controller('MainController', function ($scope, dataService, $rootScope) {
 	$scope.init = function () {
+		$scope.loading = true;
+
 		$scope.fromAddress = "Lucid Software, South River Front Parkway #600, South Jordan, UT";
 		$scope.toAddress = "733 North Braemar Way, Saratoga Springs, UT";
 		dataService.getQueries()
@@ -10,6 +12,9 @@ angular.module('myApp')
 		})
 		.catch(function (err) {
 			console.error(err);
+		})
+		.finally(function () {
+			$scope.loading = false;
 		})
 	};
 

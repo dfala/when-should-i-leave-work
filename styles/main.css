@@ -54,3 +54,8 @@ html, body {
     text-align: right;
     background-color: #edf3f3;
 	}
+
+.loading-gif {
+	width: 100%;
+	text-align: center;
+}

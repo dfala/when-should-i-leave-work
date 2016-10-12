@@ -40,6 +40,10 @@
 		</form>
 	</div>
 
+	<div class="loading-gif"  ng-if="loading">
+		<img src="styles/loading.gif"/>
+	</div>
+
 	<div class="card-wrapper" ng-repeat="item in items" ng-click="activateQuery(item)">
 		<div class="card">
 			<div class="text">

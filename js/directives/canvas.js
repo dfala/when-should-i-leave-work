@@ -25,7 +25,6 @@ angular.module('myApp')
 
 
 			function drawChart (query) {
-				console.log(query);
 				if (window.myLineChart) window.myLineChart.destroy();
 
 				var ctx = document.getElementById("myChart");
