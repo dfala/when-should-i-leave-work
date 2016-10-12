@@ -19,7 +19,7 @@ angular.module('myApp')
 
 			function generateDataPoints (query) {
 				return query.instance.map(function (instance) {
-					return instance.duration;
+					return instance.duration / 60;
 				});
 			}
 
