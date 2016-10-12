@@ -12,7 +12,7 @@ angular.module('myApp')
 
 			function generateLabels (query) {
 				return query.instance.map(function (instance) {
-					return moment(instance.time).format('MMMM Do YYYY, h:mm:ss a');
+					return moment(instance.time).format('MMM Do, h:mm:ss a');
 				});
 			};
 
@@ -30,14 +30,14 @@ angular.module('myApp')
 				var ctx = document.getElementById("myChart");
 
 				var labels 			= generateLabels(query),
-						label	 			= query.fromAddress,
+						label	 			= 'FROM: ' + query.fromAddress + ' || TO: ' + query.toAddress,
 						dataPoints 	= generateDataPoints(query);
 
 				var data = {
 			    labels: labels,
 			    datasets: [
 		        {
-	            label: query.fromAddress,
+	            label: label,
 	            fill: true,
 	            lineTension: 0,
 	            backgroundColor: "rgba(75,192,192,0.4)",
@@ -71,6 +71,10 @@ angular.module('myApp')
 			    data: data,
 					options: options
 				});
+
+				setTimeout(function () {
+					window.scrollTo(0,document.body.scrollHeight);
+				}, 200);
 			};
 
 		}
