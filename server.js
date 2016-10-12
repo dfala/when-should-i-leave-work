@@ -22,7 +22,7 @@ app.set('view engine', 'ejs');
 app.post('/api/new-time-query', TimeController.post);
 app.get('/api/data/:queryId', RenderController.serveQuery);
 app.get('/api/queries', RenderController.serveQueries);
-// TimeController.getData();
+TimeController.getData();
 
 // Connections
 var port = 3000;
