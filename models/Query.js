@@ -6,7 +6,8 @@ var QuerySchema = new mongoose.Schema({
   instance: [{
     duration: Number,
     time: {type: Date, default: Date.now}
-  }]
+  }],
+  createdDate: {type: Date, default: Date.now}
 });
 
 module.exports = mongoose.model('Query', QuerySchema);

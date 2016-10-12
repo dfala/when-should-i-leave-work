@@ -13,9 +13,13 @@ angular.module('myApp')
 		return $http.post('/api/new-time-query', data);
 	};
 
-	service.getData = function () {
-		return $http.get('/api/data');
-	}
+	service.getData = function (queryId) {
+		return $http.get('/api/data/' + queryId);
+	};
+
+	service.getQueries = function (queryId) {
+		return $http.get('/api/queries');
+	};
 
 
 

@@ -1,24 +1,28 @@
-var express = require('express');
-var cors = require('cors');
-var bodyParser = require('body-parser');
-var app = express();
-var mongoose = require('mongoose');
+var express 		= require('express'),
+		cors 				= require('cors'),
+		bodyParser 	= require('body-parser'),
+		app 				= express(),
+		ejs         = require('ejs'),
+		mongoose 		= require('mongoose');
 
 // Controllers
-var TimeController = require('./controllers/TimeController.js');
+var TimeController 		= require('./controllers/TimeController.js'),
+		RenderController	= require('./controllers/RenderController.js');
 
 
 // Middleware
-app.use(bodyParser());
 app.use(cors());
-app.use(express.static(__dirname + '/')); //serve index.html
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
+app.use(express.static(__dirname + '/'));
+app.set('view engine', 'ejs');
 
 
 // REST api
 app.post('/api/new-time-query', TimeController.post);
-// app.get('/api/data', TimeController.getData);
-TimeController.getData();
-
+app.get('/api/data/:queryId', RenderController.serveQuery);
+app.get('/api/queries', RenderController.serveQueries);
+// TimeController.getData();
 
 // Connections
 var port = 3000;

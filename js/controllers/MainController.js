@@ -1,9 +1,17 @@
 angular.module('myApp')
 
-.controller('MainController', function ($scope, dataService, $http) {
-	$scope.fromAddress = "Lucid Software, South River Front Parkway #600, South Jordan, UT";
-	$scope.toAddress = "733 North Braemar Way, Saratoga Springs, UT";
-
+.controller('MainController', function ($scope, dataService, $rootScope) {
+	$scope.init = function () {
+		$scope.fromAddress = "Lucid Software, South River Front Parkway #600, South Jordan, UT";
+		$scope.toAddress = "733 North Braemar Way, Saratoga Springs, UT";
+		dataService.getQueries()
+		.then(function (response) {
+			$scope.items = response.data;
+		})
+		.catch(function (err) {
+			console.error(err);
+		})
+	};
 
 	//example method
 	$scope.submitForm = function () {
@@ -16,16 +24,8 @@ angular.module('myApp')
 		})
 	};
 
-	$scope.getData = function () {
-		dataService.getData()
-		.then(function (response) {
-			console.warn(response);
-			window.obj = response;
-		})
-		.catch(function (err) {
-			console.error(err);
-		})
+	$scope.activateQuery = function (query) {
+		$rootScope.$emit('activate query', {query: query});
 	};
-
 
 })
