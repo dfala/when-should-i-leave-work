@@ -49,7 +49,7 @@
 				<p><strong>To:</strong> {{item.toAddress}}</p>
 			</div>
 
-			<div class="count">{{item.instance.length}} data points</div>
+			<div class="count" ng-if="item.instance">{{item.instance.length}} data points</div>
 		</div>
 	</div>
 

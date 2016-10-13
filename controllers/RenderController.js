@@ -14,7 +14,7 @@ exports.serveQuery = function (req, res) {
 };
 
 exports.serveQueries = function (req, res) {
-  Query.find({}, function (err, result) {
+  Query.find({}, {'instance': 0}, function (err, result) {
     if (err) return res.status(500).json(err);
 
     res.json(result);
