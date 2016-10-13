@@ -59,3 +59,27 @@ html, body {
 	width: 100%;
 	text-align: center;
 }
+
+.graph {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100vh;
+	background-color: #f9f9f9;
+}
+
+	.close {
+		font-size: 80px;
+    position: absolute;
+    top: 15px;
+    right: 40px;
+	}
+
+.alertify-logs .show {
+	border-radius: 3px;
+}
+
+	.alertify-logs .default {
+		background: #5D707F;
+	}

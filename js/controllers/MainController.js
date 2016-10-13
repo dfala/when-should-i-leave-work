@@ -30,7 +30,19 @@ angular.module('myApp')
 	};
 
 	$scope.activateQuery = function (query) {
-		$rootScope.$emit('activate query', {query: query});
+		alertify.log('Loading your information...');
+
+		dataService.getData(query._id)
+		.then(function (response) {
+
+			$('.alertify-logs').children().removeClass('show').addClass('hide');
+			$scope.activeQuery = true;
+			$rootScope.$emit('activate query', {query: response.data});
+		})
+		.catch(function (err) {
+			console.error(err);
+		})
+
 	};
 
 })
