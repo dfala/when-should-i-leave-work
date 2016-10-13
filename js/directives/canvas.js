@@ -62,9 +62,14 @@ angular.module('myApp')
 				};
 
 				var options = {
-			    // maintainAspectRatio: true,
-			    // responsive: false
-				};
+			    scales: {
+		        yAxes: [{
+	            ticks: {
+                beginAtZero: true
+	            }
+		        }]
+			    }
+				}
 
 				window.myLineChart = new Chart(ctx, {
 			    type: 'line',
