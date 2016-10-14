@@ -1,8 +1,12 @@
+html {
+	background: linear-gradient(150deg,#f3fbf6 25%,#edebf9 94%);
+}
+
 html, body {
 	margin: 0;
 	padding: 0;
-	background-color: #eee;
-	height: 90%;
+	background-color: transparent;
+	min-height: 100%;
 }
 
 a {
