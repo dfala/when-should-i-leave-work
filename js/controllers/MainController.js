@@ -86,6 +86,7 @@ angular.module('myApp')
 	$scope.closeQuery = function () {
 		dataStore.clearQuery();
 		$scope.activeQuery = false;
+		$scope.activeTab = 'dump';
 	};
 
 })

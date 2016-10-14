@@ -25,6 +25,7 @@ angular.module('myApp')
 				if (day === 'friday') day = 5;
 
 				var data = dataStore.serveQuery();
+				data.isDay = true;
 
 				data.instance = data.instance.filter(function (inst) {
 					if (new Date(inst.time).getDay() === day) return true;
@@ -38,7 +39,8 @@ angular.module('myApp')
 					if (!mTime[minute]) {
 						mTime[minute] = {
 							duration: inst.duration,
-							count: 1
+							count: 1,
+							time: inst.time
 						};
 					} else {
 						mTime[minute].count++;
@@ -49,8 +51,9 @@ angular.module('myApp')
 				var parsedInst = [];
 				for (var i in mTime) {
 					parsedInst.push({
-						time: i,
-						duration: mTime[i].duration / mTime[i].count
+						time: mTime[i].time,
+						duration: mTime[i].duration / mTime[i].count,
+						isDay: true
 					})
 				};
 
@@ -60,6 +63,7 @@ angular.module('myApp')
 
 			function generateLabels (query) {
 				return query.instance.map(function (instance) {
+					if (instance.isDay) return moment(instance.time).format('h:mm a');
 					return moment(instance.time).format('MMM Do, h:mm a');
 				});
 			};
@@ -85,7 +89,7 @@ angular.module('myApp')
 			    labels: labels,
 			    datasets: [
 		        {
-	            label: 'Minutes to arrival',
+	            label: query.isDay ? 'Average minutes to arrival' : 'Minutes to arrival',
 	            fill: true,
 	            lineTension: 0,
 	            backgroundColor: "rgba(75,192,192,0.4)",
