@@ -1,14 +1,62 @@
 angular.module('myApp')
 
-.directive('plotData', function ($rootScope) {
+.directive('plotData', function ($rootScope, dataStore) {
 	return {
 		restrict: 'A',
 		scope: true,
 		link: function (scope, elem, attrs) {
+
 			$rootScope.$on('activate query', function (e, data) {
 				scope.chart = true;
+				dataStore.storeQuery(data.query);
 				drawChart(data.query);
-			})
+			});
+
+			$rootScope.$on('activate tab', function (e, tab) {
+				if (tab === 'dump') return drawChart(dataStore.serveQuery());
+				return parseDayData(tab);
+			});
+
+			function parseDayData (day) {
+				if (day === 'monday') day = 1;
+				if (day === 'tuesday') day = 2;
+				if (day === 'wednesday') day = 3;
+				if (day === 'thursday') day = 4;
+				if (day === 'friday') day = 5;
+
+				var data = dataStore.serveQuery();
+
+				data.instance = data.instance.filter(function (inst) {
+					if (new Date(inst.time).getDay() === day) return true;
+					return false;
+				});
+
+				var mTime = {};
+				data.instance.forEach(function (inst) {
+					inst.time = new Date(inst.time);
+					var minute = moment(inst.time).format('h:mm a');
+					if (!mTime[minute]) {
+						mTime[minute] = {
+							duration: inst.duration,
+							count: 1
+						};
+					} else {
+						mTime[minute].count++;
+						mTime[minute].duration = mTime[minute].duration + inst.duration;
+					}
+				})
+
+				var parsedInst = [];
+				for (var i in mTime) {
+					parsedInst.push({
+						time: i,
+						duration: mTime[i].duration / mTime[i].count
+					})
+				};
+
+				data.instance = parsedInst;
+				drawChart(data);
+			};
 
 			function generateLabels (query) {
 				return query.instance.map(function (instance) {

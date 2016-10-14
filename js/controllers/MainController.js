@@ -1,8 +1,9 @@
 angular.module('myApp')
 
-.controller('MainController', function ($scope, dataService, $rootScope) {
+.controller('MainController', function ($scope, dataService, $rootScope, dataStore) {
 	$scope.init = function () {
 		$scope.loading = true;
+		$scope.activeTab = 'dump';
 
 		$scope.fromAddress = "Lucid Software, South River Front Parkway #600, South Jordan, UT";
 		$scope.toAddress = "733 North Braemar Way, Saratoga Springs, UT";
@@ -67,7 +68,24 @@ angular.module('myApp')
 		.finally(function () {
 			fetchingInfo = false;
 		});
+	};
 
+	$scope.activateTab = function (tab) {
+		if ($scope.activeTab === tab) return;
+
+		if (tab === 'dump') $scope.activeTab = 'dump';
+		if (tab === 'monday') $scope.activeTab = 'monday';
+		if (tab === 'tuesday') $scope.activeTab = 'tuesday';
+		if (tab === 'wednesday') $scope.activeTab = 'wednesday';
+		if (tab === 'thursday') $scope.activeTab = 'thursday';
+		if (tab === 'friday') $scope.activeTab = 'friday';
+
+		$rootScope.$emit('activate tab', tab);
+	};
+
+	$scope.closeQuery = function () {
+		dataStore.clearQuery();
+		$scope.activeQuery = false;
 	};
 
 })

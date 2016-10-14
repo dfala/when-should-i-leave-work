@@ -5,6 +5,10 @@ html, body {
 	height: 90%;
 }
 
+a {
+	cursor: pointer;
+}
+
 .container {
 	background-color: #fff;
 	border-radius: 5px;
