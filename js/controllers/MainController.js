@@ -29,19 +29,44 @@ angular.module('myApp')
 		})
 	};
 
+	var fetchingInfo = false;
+	var messagesArray = [
+		"Bro! Hold on a second. It's still loading...",
+		"Dude, for reals?",
+		"I can't even with you. Wait a sec.",
+		"You are so impatient -- it's unreal.",
+		"Dang it man, you barely clicked the button.",
+		"This is complicated stuff, give me a sec!",
+		"Dang, you really are on a hurry aren't you?"
+	]
+
 	$scope.activateQuery = function (query) {
-		alertify.log('Loading your information...');
+		if (fetchingInfo) {
+			$('.error').remove();
+			alertify.error(messagesArray[Math.floor(Math.random() * messagesArray.length)]);
+			return;
+		}
+
+		alertify.log('Loading your information...', null, 100000);
+		fetchingInfo = true;
 
 		dataService.getData(query._id)
 		.then(function (response) {
-
 			$('.alertify-logs').children().removeClass('show').addClass('hide');
 			$scope.activeQuery = true;
+			$scope.title = {
+				from: 'FROM: ' + response.data.fromAddress,
+				to: 'TO: ' + response.data.toAddress
+			};
+
 			$rootScope.$emit('activate query', {query: response.data});
 		})
 		.catch(function (err) {
 			console.error(err);
 		})
+		.finally(function () {
+			fetchingInfo = false;
+		});
 
 	};
 

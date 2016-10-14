@@ -16,6 +16,7 @@ html, body {
 
 .container.canvas {
 	height: 600px;
+	margin: 40px auto 20px;
 }
 
 .home-form {
@@ -70,10 +71,10 @@ html, body {
 }
 
 	.close {
-		font-size: 80px;
-    position: absolute;
-    top: 15px;
-    right: 40px;
+		font-size: 60px;
+		position: absolute;
+		top: -4px;
+		right: 40px;
 	}
 
 .alertify-logs .show {
@@ -83,3 +84,8 @@ html, body {
 	.alertify-logs .default {
 		background: #5D707F;
 	}
+
+.center {
+	text-align: center;
+	margin-top: 85px;
+}

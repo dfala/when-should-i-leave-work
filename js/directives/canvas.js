@@ -12,14 +12,14 @@ angular.module('myApp')
 
 			function generateLabels (query) {
 				return query.instance.map(function (instance) {
-					return moment(instance.time).format('MMM Do, h:mm:ss a');
+					return moment(instance.time).format('MMM Do, h:mm a');
 				});
 			};
 
 
 			function generateDataPoints (query) {
 				return query.instance.map(function (instance) {
-					return instance.duration / 60;
+					return (Math.round((instance.duration / 60) * 100) / 100);
 				});
 			}
 
@@ -37,7 +37,7 @@ angular.module('myApp')
 			    labels: labels,
 			    datasets: [
 		        {
-	            label: label,
+	            label: 'Minutes to arrival',
 	            fill: true,
 	            lineTension: 0,
 	            backgroundColor: "rgba(75,192,192,0.4)",

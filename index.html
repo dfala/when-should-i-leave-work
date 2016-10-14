@@ -58,8 +58,25 @@
 	</div>
 
 	<div class="graph animated" ng-show="activeQuery" ng-class="{'fadeIn':activeQuery}">
-		<div class="close ion-ios-close-empty" ng-click="activeQuery = false"></div>
-		<div class="container canvas" plot-data ng-show="chart">
+		<nav class="navbar navbar-default navbar-fixed-top">
+			<div class="navbar-header">
+	      <a class="navbar-brand" href="#">Brand</a>
+	    </div>
+			<ul class="nav navbar-nav">
+        <li class="active"><a href="#">Data Dump <span class="sr-only">(current)</span></a></li>
+        <li><a href="#">Monday</a></li>
+				<li><a href="#">Tuesday</a></li>
+				<li><a href="#">Wednesday</a></li>
+				<li><a href="#">Thursday</a></li>
+				<li><a href="#">Friday</a></li>
+        <li class="dropdown">
+			</ul>
+			<div class="close ion-ios-close-empty" ng-click="activeQuery = false"></div>
+		</nav>
+		<div class="center">
+			<h4>{{title.from}}<br/>{{title.to}}</h4>
+		</div>
+		<div class="container canvas " plot-data ng-show="chart">
 			<canvas id="myChart"></canvas>
 		</div>
 	</div>
