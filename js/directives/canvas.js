@@ -57,6 +57,17 @@ angular.module('myApp')
 					})
 				};
 
+				parsedInst.sort(function (a,b) {
+					var aHour = a.time.getHours();
+					var bHour = b.time.getHours();
+
+					if (aHour > bHour) return 1;
+					if (aHour < bHour) return -1;
+					if (a.time.getMinutes() > b.time.getMinutes()) return 1;
+					if (a.time.getMinutes() < b.time.getMinutes()) return -1;
+					return 0;
+				});
+
 				data.instance = parsedInst;
 				drawChart(data);
 			};
