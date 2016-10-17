@@ -5,8 +5,9 @@ angular.module('myApp')
 		$scope.loading = true;
 		$scope.activeTab = 'dump';
 
-		$scope.fromAddress = "Lucid Software, South River Front Parkway #600, South Jordan, UT";
-		$scope.toAddress = "733 North Braemar Way, Saratoga Springs, UT";
+		$scope.fromAddress = "Provo, UT";
+		$scope.toAddress = "Salt Lake City, UT";
+
 		dataService.getQueries()
 		.then(function (response) {
 			$scope.items = response.data;
@@ -22,8 +23,13 @@ angular.module('myApp')
 	//example method
 	$scope.submitForm = function () {
 		dataService.newTimeQuery($scope.fromAddress, $scope.toAddress)
-		.then(function (result) {
-			console.info(result)
+		.then(function (response) {
+			$scope.items.push(response.data);
+
+			alertify.log('Your address was successfully added. Your graph will be ready in a few days.');
+
+			$scope.fromAddress = '';
+			$scope.toAddress = '';
 		})
 		.catch(function (err) {
 			console.log(err);

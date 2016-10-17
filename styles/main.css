@@ -17,6 +17,12 @@ h4 {
 	font-weight: 400;
 }
 
+section {
+	display: flex;
+	align-items: flex-start;
+	padding: 40px 0 60px 0;
+}
+
 .container {
 	background-color: #fff;
 	border-radius: 5px;
@@ -24,7 +30,16 @@ h4 {
 	margin: 50px auto;
 	padding: 20px 25px;
 	min-height: 50%;
+
+	border-radius: 4px;
+	border: 1px solid #ddd;
+	box-shadow: 0 3px 12px 0 #dde1e4;
 }
+
+	.container.home {
+		width: 600px;
+		margin-top: 20px;
+	}
 
 .container.canvas {
 	height: 600px;
@@ -32,14 +47,18 @@ h4 {
 }
 
 .home-form {
-	max-width: 50%;
+	width: 100%;
 }
 
 .card-wrapper {
 	position: relative;
 	width: 600px;
-	margin: 40px auto 0 auto;
+	margin: 20px auto 0 auto;
 }
+
+	.card:nth-child(1) {
+		margin-top: 0;
+	}
 
 .card {
 	width: 600px;
