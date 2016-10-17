@@ -5,8 +5,8 @@ angular.module('myApp')
 		$scope.loading = true;
 		$scope.activeTab = 'dump';
 
-		$scope.fromAddress = "Provo, UT";
-		$scope.toAddress = "Salt Lake City, UT";
+		// $scope.fromAddress = "Provo, UT";
+		// $scope.toAddress = "Salt Lake City, UT";
 
 		dataService.getQueries()
 		.then(function (response) {
