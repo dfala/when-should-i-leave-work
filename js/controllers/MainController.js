@@ -5,8 +5,8 @@ angular.module('myApp')
 		$scope.loading = true;
 		$scope.activeTab = 'dump';
 
-		// $scope.fromAddress = "Provo, UT";
-		// $scope.toAddress = "Salt Lake City, UT";
+		// $scope.fromAddress = "3401 Thanksgiving Way, Lehi, UT 84043";
+		// $scope.toAddress = "1064 N 1160 W orem";
 
 		dataService.getQueries()
 		.then(function (response) {
@@ -33,6 +33,7 @@ angular.module('myApp')
 		})
 		.catch(function (err) {
 			console.log(err);
+			alertify.error("Hot cheese... that didn't work. Send dnlfala@gmail.com an email.")
 		})
 	};
 
