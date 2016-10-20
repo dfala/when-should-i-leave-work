@@ -61,6 +61,7 @@ angular.module('myApp')
 		dataService.getData(query._id)
 		.then(function (response) {
 			$('.alertify-logs').children().removeClass('show').addClass('hide');
+			$('body').css({'overflow': 'hidden'});
 			$scope.activeQuery = true;
 			$scope.title = {
 				from: 'FROM: ' + response.data.fromAddress,
@@ -92,6 +93,7 @@ angular.module('myApp')
 
 	$scope.closeQuery = function () {
 		dataStore.clearQuery();
+		$('body').css({'overflow': 'inherit'});
 		$scope.activeQuery = false;
 		$scope.activeTab = 'dump';
 	};
