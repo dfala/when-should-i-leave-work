@@ -23,7 +23,7 @@ app.post('/api/new-time-query', TimeController.post);
 app.get('/api/data/:queryId', RenderController.serveQuery);
 app.get('/api/queries', RenderController.serveQueries);
 
-TimeController.createCompleted();
+// TimeController.createCompleted();
 // TimeController.identifyQueries();
 
 // Connections

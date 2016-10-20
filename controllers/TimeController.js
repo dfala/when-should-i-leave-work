@@ -11,7 +11,15 @@ exports.post = function (req, res) {
 	var newQuery = new Query(req.body);
 	newQuery.save(function (err, result) {
 		if (err) return res.status(500).send(err);
-		return res.json(result);
+
+		var newCompleted = new Completed();
+		newCompleted.parentQuery = result._id;
+		newCompleted.instancesCount = 0;
+
+		newCompleted.save(function (err, completed) {
+			if (err) return res.status(500).send(err);
+			return res.json(result);
+		});
 	});
 };
 
