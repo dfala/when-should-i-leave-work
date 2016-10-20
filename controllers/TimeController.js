@@ -18,6 +18,7 @@ exports.post = function (req, res) {
 exports.createCompleted = function () {
 	Query.find({})
 	.then(function (queries) {
+		return console.log(queries.length);
 		queries.forEach(function (query) {
 			var newCompleted = new Completed();
 			newCompleted.parentQuery = query._id;
@@ -31,52 +32,38 @@ exports.createCompleted = function () {
 	})
 };
 
+exports.identifyQueries = function () {
+	var cron = new CronJob('00 59 15 * * 1-5', function() {
+		Completed.find({instancesCount: {$lt: 1800}})
+		.populate({ path: 'parentQuery' })
+		.exec(function (err, completeds) {
+			if (err) return console.log('ERROR COLLECTING QUERIES', err);
 
-exports.getInfo = function (req, res) {
-	Completed.find({instancesCount: {$lt: 1800}})
-}
+			var queries = completeds.map(function (completed) {
+					return completed.parentQuery;
+			});
 
-exports.getData = function (req, res) {
-	Query.find({})
-	.then(function (queries) {
-		queries.forEach(function (query) {
-			// var cron = new CronJob('* * * * * 1-5', function() {
-			var cron = new CronJob('00 * 16-18 * * 1-5', function() {
+			queries.forEach(function (query) {
+				var interval = setInterval(function() {
+					if (new Date().getHours() >= 19) return clearInterval(interval);
 
-			}, null, true, 'America/Denver');
+					var uri = "https://maps.googleapis.com/maps/api/directions/json?origin=" + encodeURIComponent(query.fromAddress) + "&destination=" + encodeURIComponent(query.toAddress) + "&traffic_model=best_guess&departure_time=now" + "&key=" + GKey;
+					Request(uri, function (error, response, body) {
+						if (!error && response.statusCode == 200) {
+							var responseJSON = JSON.parse(response.body);
+							if (!responseJSON.routes[0].legs[0].duration_in_traffic) return;
+							var duration = responseJSON.routes[0].legs[0].duration_in_traffic.value;
 
-			// console.log(cron);
+							query.instance.push({duration: duration, time: Date.now()})
+							query.save(function (err, result) {
+								if (!err) return console.log('Saved!')
+								console.log('ERROR saving', err);
+							});
+						}
+					})
+				}, 60 * 1000);
+			})
 		})
-	})
-	.catch(function (err) {
-		console.log("Could not initiate cron job: ", err);
-	})
 
+	}, null, true, 'America/Denver');
 };
-
-
-
-////////////////////////////////////////////////
-////////////////////////////////////////////////
-////////////////////  CRON  ////////////////////
-////////////////////////////////////////////////
-////////////////////////////////////////////////
-
-// console.log("CRON")
-// 	//Google map request
-// 	var uri = "https://maps.googleapis.com/maps/api/directions/json?origin=" + encodeURIComponent(query.fromAddress) + "&destination=" + encodeURIComponent(query.toAddress) + "&traffic_model=best_guess&departure_time=now" + "&key=" + GKey;
-// 	Request(uri, function (error, response, body) {
-// 		if (!error && response.statusCode == 200) {
-// 			var responseJSON = JSON.parse(response.body);
-// 			if (!responseJSON.routes[0].legs[0].duration_in_traffic) return;
-// 			var duration = responseJSON.routes[0].legs[0].duration_in_traffic.value;
-//
-// 			query.instance.push({duration: duration, time: Date.now()})
-// 			query.save(function (err, result) {
-// 				// if (err) return res.status(500).send(err);
-// 				// return res.json(response);
-// 				if (!err) return console.log('Saved!')
-// 				console.log('ERROR saving', err);
-// 			});
-// 		}
-// 	})
