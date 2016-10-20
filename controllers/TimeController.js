@@ -26,7 +26,6 @@ exports.post = function (req, res) {
 exports.createCompleted = function () {
 	Query.find({})
 	.then(function (queries) {
-		return console.log(queries.length);
 		queries.forEach(function (query) {
 			var newCompleted = new Completed();
 			newCompleted.parentQuery = query._id;
@@ -41,6 +40,7 @@ exports.createCompleted = function () {
 };
 
 exports.identifyQueries = function () {
+	console.log('The magic is about to happen!');
 	var cron = new CronJob('00 59 15 * * 1-5', function() {
 		Completed.find({instancesCount: {$lt: 1800}})
 		.populate({ path: 'parentQuery' })

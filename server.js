@@ -24,7 +24,7 @@ app.get('/api/data/:queryId', RenderController.serveQuery);
 app.get('/api/queries', RenderController.serveQueries);
 
 // TimeController.createCompleted();
-// TimeController.identifyQueries();
+TimeController.identifyQueries();
 
 // Connections
 var port = 3000;
