@@ -24,7 +24,6 @@ app.get('/api/data/:queryId', RenderController.serveQuery);
 app.get('/api/queries', RenderController.serveQueries);
 
 // TimeController.createCompleted();
-TimeController.identifyQueries();
 
 // Connections
 var port = 3000;
@@ -37,6 +36,7 @@ var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function () {
 	console.log('Mongoose connected to your soul on:', mongooseUri);
+	TimeController.identifyQueries();
 })
 
 app.listen(port, function () {
