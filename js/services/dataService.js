@@ -10,8 +10,6 @@ angular.module('myApp')
 			toAddress: toAddress
 		}
 
-		console.warn(data);
-
 		return $http.post('/api/new-time-query', data);
 	};
 
